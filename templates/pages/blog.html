@@ -1,0 +1,15 @@
+{{ template "top" . }}
+<h1>Blogus</h1>
+
+<p><a href="/about">Go to about</a></p>
+<p><a href="/blog">Go to blog</a></p>
+
+<h2>Blog list</h2>
+<ul>
+  {{ range .Articles }}
+  <li>
+    <a href="/blog/{{ .Id }}">{{ .Title }}</a>
+  </li>
+  {{ end }}
+</ul>
+{{ template "bottom" . }}
