@@ -38,7 +38,7 @@ func main() {
 			"meta": gin.H{
 				"title": "Blogus Listus",
 			},
-			"Articles": []articleType{
+			"articles": []articleType{
 				{Id: "1", Title: "Articlus 1", Description: "Coolus articlus aboutus somethingus goose", Content: "<p>lorem <b>pipsum<b></p>"},
 				{Id: "2", Title: "AArticlus 2", Description: "Coolus articlus aboutus somethingus goose", Content: "<p>lorem <b>pipsum<b></p>"},
 				{Id: "3", Title: "Arrticlus 3", Description: "Coolus articlus aboutus somethingus goose", Content: "<p>lorem <b>pipsum<b></p>"},
