@@ -9,14 +9,22 @@ import (
 func main() {
 	ginEngine := gin.Default()
 
-	ginEngine.LoadHTMLGlob("templates/*")
 	ginEngine.Static("/public", "./public")
+	ginEngine.LoadHTMLGlob("templates/**/*")
 
 	ginEngine.GET("/", func(context *gin.Context) {
-		context.HTML(http.StatusOK, "home.html", nil)
+		context.HTML(http.StatusOK, "home.html", gin.H{
+			"meta": gin.H{
+				"title": "Homus",
+			},
+		})
 	})
 	ginEngine.GET("/about", func(context *gin.Context) {
-		context.HTML(http.StatusOK, "about.html", nil)
+		context.HTML(http.StatusOK, "about.html", gin.H{
+			"meta": gin.H{
+				"title": "Aboutus",
+			},
+		})
 	})
 
 	ginEngine.Run(":9000")
