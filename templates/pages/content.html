@@ -1,0 +1,9 @@
+{{ template "top" . }}
+<h1>{{ .content.Title }}</h1>
+<p><a href="/about">Go to about</a></p>
+<p><a href="/blog">Go to blog</a></p>
+
+<div>
+  {{ strToHTML .content.Content }}
+</div>
+{{ template "bottom" . }}
