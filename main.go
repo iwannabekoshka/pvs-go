@@ -10,6 +10,7 @@ func main() {
 	ginEngine := gin.Default()
 
 	ginEngine.LoadHTMLGlob("templates/*")
+	ginEngine.Static("/public", "./public")
 
 	ginEngine.GET("/", func(context *gin.Context) {
 		context.HTML(http.StatusOK, "home.html", nil)
