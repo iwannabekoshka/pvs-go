@@ -64,6 +64,11 @@ func main() {
 			}
 		}
 
+		if (article == articleType{}) {
+			returnPage404(context, "Нет такой статьи")
+			return
+		}
+
 		context.HTML(http.StatusOK, "content.html", gin.H{
 			"meta": gin.H{
 				"title": article.Title,
@@ -71,10 +76,19 @@ func main() {
 			"content": article,
 		})
 	})
+	ginEngine.NoRoute(func(context *gin.Context) {
+		returnPage404(context, "Нет такой страницы")
+	})
 
 	ginEngine.Run(":9000")
 }
 
 func strToHTML(str string) template.HTML {
 	return template.HTML(str)
+}
+
+func returnPage404(context *gin.Context, message string) {
+	context.HTML(http.StatusNotFound, "404.html", gin.H{
+		"message": message,
+	})
 }
