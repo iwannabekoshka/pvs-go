@@ -3,9 +3,29 @@ package main
 import (
 	"html/template"
 	"net/http"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"github.com/qor/admin"
+	"github.com/qor/qor/utils"
+
+	"github.com/qor/assetfs"
+	_ "github.com/sergolius/qor_bindatafs_example/config/bindatafs"
 )
+
+type User struct {
+	gorm.Model
+	Name string
+}
+
+type Article struct {
+	gorm.Model
+	Title   string
+	Content string
+}
 
 type articleType struct {
 	Id          string
@@ -23,6 +43,30 @@ var articles = []articleType{
 
 func main() {
 	ginEngine := gin.Default()
+
+	DB, _ := gorm.Open(
+		"sqlite3",
+		"db.db",
+	)
+	DB.AutoMigrate(&User{}, &Article{})
+
+	// Initialize AssetFS
+	AssetFS := assetfs.AssetFS().NameSpace("admin")
+	// Register custom paths to manually saved views
+	AssetFS.RegisterPath(filepath.Join(utils.AppRoot, "qor/admin/views"))
+
+	Admin := admin.New(&admin.AdminConfig{
+		DB:      DB,
+		AssetFS: AssetFS,
+	})
+
+	Admin.AddResource(&User{})
+	Admin.AddResource(&Article{})
+
+	mux := http.NewServeMux()
+	Admin.MountTo("/admin", mux)
+
+	ginEngine.Any("/admin/*resources", gin.WrapH(mux))
 
 	ginEngine.Static("/public", "./public")
 
