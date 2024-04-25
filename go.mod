@@ -6,6 +6,9 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/jinzhu/gorm v1.9.16
 	github.com/qor/admin v1.2.0
+	github.com/qor/assetfs v0.0.0-20170713023933-ff57fdc13a14
+	github.com/qor/qor v1.3.0
+	github.com/sergolius/qor_bindatafs_example v0.0.0-20200126000246-61e8633b2afe
 )
 
 require (
@@ -52,16 +55,13 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.1 // indirect
-	github.com/qor/assetfs v0.0.0-20170713023933-ff57fdc13a14 // indirect
 	github.com/qor/bindatafs v0.0.0-20180208124510-71f37a9bdd10 // indirect
 	github.com/qor/middlewares v0.0.0-20170822143614-781378b69454 // indirect
-	github.com/qor/qor v1.3.0 // indirect
 	github.com/qor/responder v0.0.0-20171031032654-b6def473574f // indirect
 	github.com/qor/roles v0.0.0-20171127035124-d6375609fe3e // indirect
 	github.com/qor/session v0.0.0-20170907035918-8206b0adab70 // indirect
 	github.com/qor/validations v0.0.0-20171228122639-f364bca61b46 // indirect
 	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
-	github.com/sergolius/qor_bindatafs_example v0.0.0-20200126000246-61e8633b2afe // indirect
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
 	github.com/tdewolff/parse/v2 v2.7.12 // indirect
