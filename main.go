@@ -27,20 +27,6 @@ type Article struct {
 	Content string
 }
 
-type articleType struct {
-	Id          string
-	Title       string
-	Description string
-	Content     string
-}
-
-var articles = []articleType{
-	{Id: "1", Title: "Articlus 1", Description: "Coolus articlus aboutus somethingus goose", Content: "<p>lorem <b>pipsum</b></p>"},
-	{Id: "2", Title: "AArticlus 2", Description: "Coolus articlus aboutus somethingus goose", Content: "<p>lorem <b>pipsumpipsum</b></p>"},
-	{Id: "3", Title: "Arrticlus 3", Description: "Coolus articlus aboutus somethingus goose", Content: "<p>lorem <b>pipsum</b>pipsum</p>"},
-	{Id: "4", Title: "Artticlus 4", Description: "Coolus articlus aboutus somethingus goose", Content: "<p>lorem <b>pipsum</b>pipsumpipsum</p>"},
-}
-
 func main() {
 	ginEngine := gin.Default()
 
@@ -90,6 +76,13 @@ func main() {
 		})
 	})
 	ginEngine.GET("/blog", func(context *gin.Context) {
+		var articles = []Article{}
+		var result = DB.Find(&articles)
+
+		if result.Error != nil {
+			returnPage500(context, result.Error.Error())
+		}
+
 		context.HTML(http.StatusOK, "blog.html", gin.H{
 			"meta": gin.H{
 				"title": "Blogus Listus",
@@ -99,18 +92,12 @@ func main() {
 	})
 	ginEngine.GET("/blog/:id", func(context *gin.Context) {
 		var articleId = context.Param("id")
-		var article articleType
+		var article = Article{}
 
-		for _, _article := range articles {
-			if _article.Id == articleId {
-				article = _article
-				break
-			}
-		}
+		var result = DB.Where("ID = ?", articleId).First(&article)
 
-		if (article == articleType{}) {
-			returnPage404(context, "Нет такой статьи")
-			return
+		if result.Error != nil {
+			returnPage500(context, result.Error.Error())
 		}
 
 		context.HTML(http.StatusOK, "content.html", gin.H{
@@ -133,6 +120,12 @@ func strToHTML(str string) template.HTML {
 
 func returnPage404(context *gin.Context, message string) {
 	context.HTML(http.StatusNotFound, "404.html", gin.H{
+		"message": message,
+	})
+}
+
+func returnPage500(context *gin.Context, message string) {
+	context.HTML(http.StatusNotFound, "500.html", gin.H{
 		"message": message,
 	})
 }
